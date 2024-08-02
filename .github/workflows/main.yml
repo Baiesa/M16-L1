@@ -1,7 +1,10 @@
-name: CI/CD Pipeline
+name: CI
 
 on:
   push:
+    branches:
+      - feature/tests
+  pull_request:
     branches:
       - feature/tests
 
@@ -10,12 +13,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
       with:
         node-version: '14'
+
     - name: Install dependencies
       run: npm install
+
     - name: Run tests
       run: npm test
